@@ -47,7 +47,7 @@
           </div>
           <div class="listingblock">
             <div class="content">
-              <pre class="highlight"><code class="language-c" data-lang="c">#include &lt;iostream&gt;
+              <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
 
 using namespace std;
@@ -103,6 +103,80 @@ int main(int, char**) {
               <img src="https://i.imgur.com/AEkqoRn.jpg" alt="Sunset" width="256" height="256">
             </div>
             <div class="title">Figure 2: Foto modificada</div>
+          </div>
+        </div>
+        <div class="sect2">
+          <h3 id="_invertendo_regi_es">Invertendo regiões</h3>
+          <div class="paragraph">
+            <p>O programa deve trocar os quadrantes em diagonal na imagem. Inicialmente
+              como podemos ver no código, a imagem é dividida em 4 partes iguais
+              (como sabemos que a imagem tem 256x256, a imagem é cortada nos pontos
+              {(0,0),(128,0),(0,128),(128,128)}), e construimos uma nova imagem colando
+              em cada quadrante, uma parte cortada anteriormente.</p>
+          </div>
+          <div class="listingblock">
+            <div class="content">
+              <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
+#include &lt;cv.h&gt;
+#include &lt;highgui.h&gt;
+#include &lt;opencv2/imgproc/imgproc.hpp&gt;
+#include &lt;opencv2/opencv.hpp&gt;
+#include &lt;stdlib.h&gt;
+
+using namespace cv;
+using namespace std;
+
+int main(int, char**){
+  Mat image(256,256,CV_8UC1);
+  Mat image2(256,256,CV_8UC1);
+  image= imread("biel.png",CV_LOAD_IMAGE_GRAYSCALE);
+  if(!image.data){
+	  cout &lt;&lt; "A imagem nao abriu" &lt;&lt; endl;
+  }
+ //namedWindow("janela",WINDOW_AUTOSIZE);
+  Mat quadrado1(image, Rect(0,0,128,128));
+  Mat quadrado2(image, Rect(128,0,128,128));
+  Mat quadrado3(image, Rect(0,128,128,128));
+  Mat quadrado4(image, Rect(128,128,128,128));
+
+  quadrado1.copyTo(image2(Rect(128, 128, 128, 128)));
+  quadrado2.copyTo(image2(Rect(128, 0, 128, 128)));
+  quadrado3.copyTo(image2(Rect(0, 128, 128, 128)));
+  quadrado4.copyTo(image2(Rect(0, 0, 128, 128)));
+
+  imshow("Trab2", image2);
+  imwrite("bieltrocado.png", image2);
+  waitKey();
+return 0;
+}
+
+}</code></pre>
+            </div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/bieltrocado2.png?raw=true"
+                alt="Sunset" width="256" height="256">
+            </div>
+            <div class="title">Figure 3: Exemplo do código acima</div>
+          </div>
+          <div class="paragraph">
+            <p>Modificando os quadrantes da colagem:</p>
+          </div>
+          <div class="listingblock">
+            <div class="content">
+              <pre class="highlight"><code class="language-cpp" data-lang="cpp">  quadrado1.copyTo(image2(Rect(128, 128, 128, 128)));
+  quadrado2.copyTo(image2(Rect(0, 128, 128, 128)));
+  quadrado3.copyTo(image2(Rect(128, 0, 128, 128)));
+  quadrado4.copyTo(image2(Rect(0, 0, 128, 128)));</code></pre>
+            </div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/bieltrocado.png?raw=true"
+                alt="Sunset" width="256" height="256">
+            </div>
+            <div class="title">Figure 4: Exemplo do código acima com modificação dos quadrantes</div>
           </div>
         </div>
         <div class="sect2">
