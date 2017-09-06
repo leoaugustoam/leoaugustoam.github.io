@@ -1,34 +1,53 @@
-<h1>Processamento Digital de Imagens</h1>
-<div id="preamble">
-  <div class="sectionbody">
-    <div class="paragraph">
-      <p>Leonardo Augusto de Aquino Marques &lt;<a href="mailto:leoaugustoam@gmail.com">leoaugustoam@gmail.com</a>&gt;</p>
-    </div>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Asciidoctor 1.5.4">
+  <title>Processamento Digital de Imagens</title>
+  <link rel="stylesheet" href="https://asciidoclive.com/assets/asciidoctor.js/css/asciidoctor.css">
+</head>
+
+<body class="article">
+  <div id="header">
+    <h1>Processamento Digital de Imagens</h1>
   </div>
-</div>
-<div class="sect1">
-  <h2 id="_unidade_1">Unidade 1</h2>
-  <div class="sectionbody">
-    <div class="sect2">
-      <h3 id="_manipulando_pixels_em_uma_imagem">Manipulando pixels em uma imagem</h3>
-      <div class="paragraph">
-        <p>Utilizando o programa <a href="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/codigos/pixels.cpp">exemplo/pixels.cpp</a>          como referência, foi implementado o programa regions.cpp. Esse programa
-          solicita ao usuário as coordenadas x e y de dois pontos P1 e P2, localizados
-          dentro dos limites do tamanho da imagem e exibir o que lhe for fornecida.
-          Entretanto, a região definida pelo retângulo de vértices opostos definidos
-          pelos pontos P1 e P2 será exibida com o negativo da imagem na região correspondente.</p>
+  <div id="content">
+    <div id="preamble">
+      <div class="sectionbody">
+        <div class="paragraph">
+          <p>Leonardo Augusto de Aquino Marques &lt;<a href="mailto:leoaugustoam@gmail.com">leoaugustoam@gmail.com</a>&gt;</p>
+        </div>
       </div>
-      <div class="paragraph">
-        <p>Inicialmente, a imagem é carregada e suas dimensões são verificadas, de modo
-          a mostrar ao usuario quais pixels ele pode modificar. Logo apos, deve ser
-          digitado as cordenadas do ponto 1 (X1 e Y1) e ponto 2 (X2 e Y2), para que
-          a area definida pelo retângulo destes vertices (P1 e P2) seja negativada,
-          feito isto, a imagem é percorrida por 2 laços em que negativa a imagem
-          na area definida, fazendo com que cada pixel, seja invertido (255 - valor_atual_do_pixel).</p>
-      </div>
-      <div class="listingblock">
-        <div class="content">
-          <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
+    </div>
+    <div class="sect1">
+      <h2 id="_unidade_1">Unidade 1</h2>
+      <div class="sectionbody">
+        <div class="sect2">
+          <h3 id="_manipulando_pixels_em_uma_imagem">Manipulando pixels em uma imagem</h3>
+          <div class="paragraph">
+            <p>Utilizando o programa <a href="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/codigos/pixels.cpp">exemplo/pixels.cpp</a>              como referência, foi implementado o programa regions.cpp. Esse programa
+              solicita ao usuário as coordenadas x e y de dois pontos P1 e P2, localizados
+              dentro dos limites do tamanho da imagem e exibir o que lhe for fornecida.
+              Entretanto, a região definida pelo retângulo de vértices opostos definidos
+              pelos pontos P1 e P2 será exibida com o negativo da imagem na região
+              correspondente.</p>
+          </div>
+          <div class="paragraph">
+            <p>Inicialmente, a imagem é carregada e suas dimensões são verificadas,
+              de modo a mostrar ao usuario quais pixels ele pode modificar. Logo
+              apos, deve ser digitado as cordenadas do ponto 1 (X1 e Y1) e ponto
+              2 (X2 e Y2), para que a area definida pelo retângulo destes vertices
+              (P1 e P2) seja negativada, feito isto, a imagem é percorrida por 2
+              laços em que negativa a imagem na area definida, fazendo com que cada
+              pixel, seja invertido (255 - valor_atual_do_pixel).</p>
+          </div>
+          <div class="listingblock">
+            <div class="content">
+              <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
 
 using namespace std;
@@ -70,35 +89,35 @@ int main(int, char**) {
 
   return 0;
 }</code></pre>
+            </div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/biel.png?raw=true"
+                alt="Sunset" width="256" height="256">
+            </div>
+            <div class="title">Figure 1: Foto original</div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/negativo.png?raw=true"
+                alt="Sunset" width="256" height="256">
+            </div>
+            <div class="title">Figure 2: Foto modificada</div>
+          </div>
         </div>
-      </div>
-      <div id="img-sunset" class="imageblock">
-        <div class="content">
-          <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/biel.png?raw=true"
-            alt="Sunset" width="256" height="256">
-        </div>
-        <div class="title">Figure 1: Foto original</div>
-      </div>
-      <div id="img-sunset" class="imageblock">
-        <div class="content">
-          <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/negativo.png?raw=true"
-            alt="Sunset" width="256" height="256">
-        </div>
-        <div class="title">Figure 2: Foto modificada</div>
-      </div>
-    </div>
-    <div class="sect2">
-      <h3 id="_invertendo_regi_es">Invertendo regiões</h3>
-      <div class="paragraph">
-        <p>O programa deve trocar os quadrantes em diagonal na imagem. Inicialmente
-          como podemos ver no código, a imagem é dividida em 4 partes iguais (como
-          sabemos que a imagem tem 256x256, a imagem é cortada nos pontos {(0,0),(128,0),(0,128),(128,128)}),
-          e construimos uma nova imagem colando em cada quadrante, uma parte cortada
-          anteriormente.</p>
-      </div>
-      <div class="listingblock">
-        <div class="content">
-          <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
+        <div class="sect2">
+          <h3 id="_invertendo_regi_es">Invertendo regiões</h3>
+          <div class="paragraph">
+            <p>O programa deve trocar os quadrantes em diagonal na imagem. Inicialmente
+              como podemos ver no código, a imagem é dividida em 4 partes iguais
+              (como sabemos que a imagem tem 256x256, a imagem é cortada nos pontos
+              {(0,0),(128,0),(0,128),(128,128)}), e construimos uma nova imagem colando
+              em cada quadrante, uma parte cortada anteriormente.</p>
+          </div>
+          <div class="listingblock">
+            <div class="content">
+              <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
 #include &lt;cv.h&gt;
 #include &lt;highgui.h&gt;
 #include &lt;opencv2/imgproc/imgproc.hpp&gt;
@@ -133,59 +152,59 @@ return 0;
 }
 
 }</code></pre>
-        </div>
-      </div>
-      <div id="img-sunset" class="imageblock">
-        <div class="content">
-          <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/bieltrocado2.png?raw=true"
-            alt="Sunset" width="256" height="256">
-        </div>
-        <div class="title">Figure 3: Exemplo do código acima</div>
-      </div>
-      <div class="paragraph">
-        <p>Modificando os quadrantes da colagem:</p>
-      </div>
-      <div class="listingblock">
-        <div class="content">
-          <pre class="highlight"><code class="language-cpp" data-lang="cpp">  quadrado1.copyTo(image2(Rect(128, 128, 128, 128)));
+            </div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/bieltrocado2.png?raw=true"
+                alt="Sunset" width="256" height="256">
+            </div>
+            <div class="title">Figure 3: Exemplo do código acima</div>
+          </div>
+          <div class="paragraph">
+            <p>Modificando os quadrantes da colagem:</p>
+          </div>
+          <div class="listingblock">
+            <div class="content">
+              <pre class="highlight"><code class="language-cpp" data-lang="cpp">  quadrado1.copyTo(image2(Rect(128, 128, 128, 128)));
   quadrado2.copyTo(image2(Rect(0, 128, 128, 128)));
   quadrado3.copyTo(image2(Rect(128, 0, 128, 128)));
   quadrado4.copyTo(image2(Rect(0, 0, 128, 128)));</code></pre>
+            </div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/bieltrocado.png?raw=true"
+                alt="Sunset" width="256" height="256">
+            </div>
+            <div class="title">Figure 4: Exemplo do código acima com modificação dos quadrantes</div>
+          </div>
         </div>
-      </div>
-      <div id="img-sunset" class="imageblock">
-        <div class="content">
-          <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/bieltrocado.png?raw=true"
-            alt="Sunset" width="256" height="256">
-        </div>
-        <div class="title">Figure 4: Exemplo do código acima com modificação dos quadrantes</div>
-      </div>
-    </div>
-    <div class="sect2">
-      <h3 id="_preenchendo_regi_es">Preenchendo regiões</h3>
-      <div class="paragraph">
-        <p>O primeiro problema é referente caso exista mais de 255 objetos na cena,
-          em que o problema de rotulação fica comprometido, e isto ocorre devido
-          a quantidade de bits que são usados na imagem, no caso 8bits, assim, obtendo
-          256 tons de cinza disponivel. E para resolver este problema, poderia aumentar
-          a quantidade de bits para representar cada cor, por exemplo se tivesse
-          10 bits, poderia ter ate 1024 tons de cinza na imagem, considerando a imagem
-          sempre em tom de cinza.</p>
-      </div>
-      <div class="paragraph">
-        <p>A segunda problematica é em relaçao a contagem de regiões com ou sem buracos
-          internos que existam na cena, retirando as que tocam na borda, para tanto,
-          é necessario primeiramente remover todas as regiões que tocam a borda,
-          para isso, é aplicado o floodFill em todas as regioes q tocam as linhas
-          ou colunas da borda, e para ficar facil identificar as regiões com buracos,
-          mudamos o o tom de cinza do fundo da imagem(floodfill no ponto (0,0)),
-          então para o tom de cinza original, significa o buraco de alguma area da
-          cena, então é possivel aplicar o floodfill para diferenciar das demais,
-          e para as areas restantes, são as areas sem furo.</p>
-      </div>
-      <div class="listingblock">
-        <div class="content">
-          <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
+        <div class="sect2">
+          <h3 id="_preenchendo_regi_es">Preenchendo regiões</h3>
+          <div class="paragraph">
+            <p>O primeiro problema é referente caso exista mais de 255 objetos na cena,
+              em que o problema de rotulação fica comprometido, e isto ocorre devido
+              a quantidade de bits que são usados na imagem, no caso 8bits, assim,
+              obtendo 256 tons de cinza disponivel. E para resolver este problema,
+              poderia aumentar a quantidade de bits para representar cada cor, por
+              exemplo se tivesse 10 bits, poderia ter ate 1024 tons de cinza na imagem,
+              considerando a imagem sempre em tom de cinza.</p>
+          </div>
+          <div class="paragraph">
+            <p>A segunda problematica é em relaçao a contagem de regiões com ou sem
+              buracos internos que existam na cena, retirando as que tocam na borda,
+              para tanto, é necessario primeiramente remover todas as regiões que
+              tocam a borda, para isso, é aplicado o floodFill em todas as regioes
+              q tocam as linhas ou colunas da borda, e para ficar facil identificar
+              as regiões com buracos, mudamos o o tom de cinza do fundo da imagem(floodfill
+              no ponto (0,0)), então para o tom de cinza original, significa o buraco
+              de alguma area da cena, então é possivel aplicar o floodfill para diferenciar
+              das demais, e para as areas restantes, são as areas sem furo.</p>
+          </div>
+          <div class="listingblock">
+            <div class="content">
+              <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
 using namespace cv;
 using namespace std;
@@ -247,28 +266,28 @@ int main(int argc, char** argv) {
 	waitKey();
 	return 0;
 }</code></pre>
-        </div>
-      </div>
-      <div id="img-sunset" class="imageblock">
-        <div class="content">
-          <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/labeling.png?raw=true"
-            alt="Sunset" width="256" height="256">
-        </div>
-        <div class="title">Figure 4: Resultado obtido</div>
-      </div>
-      <div class="sect3">
-        <h4 id="__strong_o_site_ainda_esta_em_manuten_o_devido_isto_os_proximos_exemplos_ainda_n_o_estao_detalhados_strong"><strong>o site ainda esta em manutenção, devido isto, os proximos exemplos ainda não estao detalhados</strong></h4>
+            </div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/labeling.png?raw=true"
+                alt="Sunset" width="256" height="256">
+            </div>
+            <div class="title">Figure 4: Resultado obtido</div>
+          </div>
+          <div class="sect3">
+            <h4 id="__strong_o_site_ainda_esta_em_manuten_o_devido_isto_os_proximos_exemplos_ainda_n_o_estao_detalhados_strong"><strong>o site ainda esta em manutenção, devido isto, os proximos exemplos ainda não estao detalhados</strong></h4>
 
-      </div>
-    </div>
-    <div class="sect2">
-      <h3 id="_manipula_o_de_histogramas">Manipulação de histogramas</h3>
-      <div class="paragraph">
-        <p>A leitura da camera com ambientes com diferentes iluminações</p>
-      </div>
-      <div class="listingblock">
-        <div class="content">
-          <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
+          </div>
+        </div>
+        <div class="sect2">
+          <h3 id="_manipula_o_de_histogramas">Manipulação de histogramas</h3>
+          <div class="paragraph">
+            <p>A leitura da camera com ambientes com diferentes iluminações</p>
+          </div>
+          <div class="listingblock">
+            <div class="content">
+              <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
 #include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
 using namespace cv;
@@ -350,35 +369,35 @@ int main(int argc, char** argv) {
 
 
 }</code></pre>
-        </div>
-      </div>
-      <div id="img-sunset" class="imageblock">
-        <div class="content">
-          <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/res1.jpg?raw=true"
-            alt="Sunset" width="512" height="256">
-        </div>
-        <div class="title">Figure 4: Resultado obtido</div>
-      </div>
-      <div id="img-sunset" class="imageblock">
-        <div class="content">
-          <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/res2.png?raw=true"
-            alt="Sunset" width="512" height="256">
-        </div>
-        <div class="title">Figure 4: Resultado obtido</div>
-      </div>
-      <div id="img-sunset" class="imageblock">
-        <div class="content">
-          <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/resultado.png?raw=true"
-            alt="Sunset" width="512" height="256">
-        </div>
-        <div class="title">Figure 4: Resultado obtido</div>
-      </div>
-      <div class="paragraph">
-        <p>Detecção de movimento</p>
-      </div>
-      <div class="listingblock">
-        <div class="content">
-          <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
+            </div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/res1.jpg?raw=true"
+                alt="Sunset" width="512" height="256">
+            </div>
+            <div class="title">Figure 4: Resultado obtido</div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/res2.png?raw=true"
+                alt="Sunset" width="512" height="256">
+            </div>
+            <div class="title">Figure 4: Resultado obtido</div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/resultado.png?raw=true"
+                alt="Sunset" width="512" height="256">
+            </div>
+            <div class="title">Figure 4: Resultado obtido</div>
+          </div>
+          <div class="paragraph">
+            <p>Detecção de movimento</p>
+          </div>
+          <div class="listingblock">
+            <div class="content">
+              <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
 using namespace cv;
 using namespace std;
@@ -472,21 +491,21 @@ int main(int argc, char** argv) {
 
 
 }</code></pre>
+            </div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/movimento.png?raw=true"
+                alt="Sunset" width="315" height="256">
+            </div>
+            <div class="title">Figure 4: Resultado obtido</div>
+          </div>
         </div>
-      </div>
-      <div id="img-sunset" class="imageblock">
-        <div class="content">
-          <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/movimento.png?raw=true"
-            alt="Sunset" width="315" height="256">
-        </div>
-        <div class="title">Figure 4: Resultado obtido</div>
-      </div>
-    </div>
-    <div class="sect2">
-      <h3 id="_filtragem_no_dom_nio_espacial_i">Filtragem no domínio espacial I</h3>
-      <div class="listingblock">
-        <div class="content">
-          <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
+        <div class="sect2">
+          <h3 id="_filtragem_no_dom_nio_espacial_i">Filtragem no domínio espacial I</h3>
+          <div class="listingblock">
+            <div class="content">
+              <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
 #include &lt;opencv2/opencv.hpp&gt;
 using namespace cv;
 using namespace std;
@@ -611,43 +630,47 @@ int main(int argvc, char** argv) {
 }
 
 }</code></pre>
+            </div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/filtro%20horizontal.jpg?raw=true"
+                alt="Sunset" width="300" height="300">
+            </div>
+            <div class="title">Figure x: Filtro Horizontal</div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/foto%20flamengo%20original.jpg?raw=true"
+                alt="Sunset" width="300" height="300">
+            </div>
+            <div class="title">Figure x: Imagem Original</div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/gaus.jpg?raw=true"
+                alt="Sunset" width="300" height="300">
+            </div>
+            <div class="title">Figure x: Filtro gauss</div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/laplaciano%20de%20gaussiano.jpg.jpg?raw=true"
+                alt="Sunset" width="300" height="300">
+            </div>
+            <div class="title">Figure x: Filtro laplaciano-gaussiano</div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/laplaciano.jpg?raw=true"
+                alt="Sunset" width="300" height="300">
+            </div>
+            <div class="title">Figure x: Filtro laplaciano</div>
+          </div>
         </div>
-      </div>
-      <div id="img-sunset" class="imageblock">
-        <div class="content">
-          <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/filtro%20horizontal.jpg?raw=true"
-            alt="Sunset" width="300" height="300">
-        </div>
-        <div class="title">Figure x: Filtro Horizontal</div>
-      </div>
-      <div id="img-sunset" class="imageblock">
-        <div class="content">
-          <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/foto%20flamengo%20original.jpg?raw=true"
-            alt="Sunset" width="300" height="300">
-        </div>
-        <div class="title">Figure x: Imagem Original</div>
-      </div>
-      <div id="img-sunset" class="imageblock">
-        <div class="content">
-          <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/gaus.jpg?raw=true"
-            alt="Sunset" width="300" height="300">
-        </div>
-        <div class="title">Figure x: Filtro gauss</div>
-      </div>
-      <div id="img-sunset" class="imageblock">
-        <div class="content">
-          <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/laplaciano%20de%20gaussiano.jpg.jpg?raw=true"
-            alt="Sunset" width="300" height="300">
-        </div>
-        <div class="title">Figure x: Filtro laplaciano-gaussiano</div>
-      </div>
-      <div id="img-sunset" class="imageblock">
-        <div class="content">
-          <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/laplaciano.jpg?raw=true"
-            alt="Sunset" width="300" height="300">
-        </div>
-        <div class="title">Figure x: Filtro laplaciano</div>
       </div>
     </div>
   </div>
-</div>
+</body>
+
+</html>
