@@ -9,8 +9,6 @@
   <meta name="generator" content="Asciidoctor 1.5.4">
   <title>Processamento Digital de Imagens</title>
   <link rel="stylesheet" href="https://asciidoclive.com/assets/asciidoctor.js/css/asciidoctor.css">
-	
-	
 </head>
 
 <body class="article">
@@ -120,39 +118,39 @@ int main(int, char**) {
           <div class="listingblock">
             <div class="content">
               <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
-#include &lt;cv.h&gt;
-#include &lt;highgui.h&gt;
-#include &lt;opencv2/imgproc/imgproc.hpp&gt;
 #include &lt;opencv2/opencv.hpp&gt;
-#include &lt;stdlib.h&gt;
 
 using namespace cv;
 using namespace std;
 
 int main(int, char**){
-  Mat image(256,256,CV_8UC1);
-  Mat image2(256,256,CV_8UC1);
-  image= imread("biel.png",CV_LOAD_IMAGE_GRAYSCALE);
-  if(!image.data){
-	  cout &lt;&lt; "A imagem nao abriu" &lt;&lt; endl;
-  }
- //namedWindow("janela",WINDOW_AUTOSIZE);
-  Mat quadrado1(image, Rect(0,0,128,128));
-  Mat quadrado2(image, Rect(128,0,128,128));
-  Mat quadrado3(image, Rect(0,128,128,128));
-  Mat quadrado4(image, Rect(128,128,128,128));
+  Mat image, image2, p1, p2, p3, p4;
+  int width, height;
 
-  quadrado1.copyTo(image2(Rect(128, 128, 128, 128)));
-  quadrado2.copyTo(image2(Rect(128, 0, 128, 128)));
-  quadrado3.copyTo(image2(Rect(0, 128, 128, 128)));
-  quadrado4.copyTo(image2(Rect(0, 0, 128, 128)));
+  image = imread("biel.png",CV_LOAD_IMAGE_GRAYSCALE);
+  image2 = imread("biel.png",CV_LOAD_IMAGE_GRAYSCALE);
 
-  imshow("Trab2", image2);
-  imwrite("bieltrocado.png", image2);
+  width  = image.size().width;
+  height = image.size().height;
+
+  p1 = image(Rect(0,0,(width/2),(height/2)));
+  p2 = image(Rect((width/2),0,(width/2),(height/2)));
+  p3 = image(Rect(0,(height/2),(width/2),(height/2)));
+  p4 = image(Rect((width/2),(height/2),(width/2),(height/2)));
+
+  imshow("Original", image);
   waitKey();
-return 0;
-}
 
+  p1.copyTo(image2(Rect((width/2),(height/2),(width/2),(height/2))));
+  p2.copyTo(image2(Rect(0,(height/2),(width/2),(height/2))));
+  p3.copyTo(image2(Rect((width/2),0,(width/2),(height/2))));
+  p4.copyTo(image2(Rect(0,0,(width/2),(height/2))));
+
+  imshow("Imagem trocada", image2);
+  imwrite("imagemtrocada.png", image2);
+  waitKey();
+
+  return 0;
 }</code></pre>
             </div>
           </div>
@@ -168,10 +166,10 @@ return 0;
           </div>
           <div class="listingblock">
             <div class="content">
-              <pre class="highlight"><code class="language-cpp" data-lang="cpp">  quadrado1.copyTo(image2(Rect(128, 128, 128, 128)));
-  quadrado2.copyTo(image2(Rect(0, 128, 128, 128)));
-  quadrado3.copyTo(image2(Rect(128, 0, 128, 128)));
-  quadrado4.copyTo(image2(Rect(0, 0, 128, 128)));</code></pre>
+              <pre class="highlight"><code class="language-cpp" data-lang="cpp"> p1.copyTo(image2(Rect((width/2),(height/2),(width/2),(height/2))));
+  p2.copyTo(image2(Rect((width/2),0,(width/2),(height/2))));
+  p3.copyTo(image2(Rect(0,(height/2),(width/2),(height/2))));
+  p4.copyTo(image2(Rect(0,0,(width/2),(height/2))));</code></pre>
             </div>
           </div>
           <div id="img-sunset" class="imageblock">
@@ -275,17 +273,18 @@ int main(int argc, char** argv) {
               <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/labeling.png?raw=true"
                 alt="Sunset" width="256" height="256">
             </div>
-            <div class="title">Figure 4: Resultado obtido</div>
-          </div>
-          <div class="sect3">
-            <h4 id="__strong_o_site_ainda_esta_em_manuten_o_devido_isto_os_proximos_exemplos_ainda_n_o_estao_detalhados_strong"><strong>o site ainda esta em manutenção, devido isto, os proximos exemplos ainda não estao detalhados</strong></h4>
-
+            <div class="title">Figure 5: Resultado obtido</div>
           </div>
         </div>
         <div class="sect2">
           <h3 id="_manipula_o_de_histogramas">Manipulação de histogramas</h3>
           <div class="paragraph">
-            <p>A leitura da camera com ambientes com diferentes iluminações</p>
+            <p>Como mostrado anteriormente e analisando o programa histogram.cpp, adaptamos
+              o codigo de forma a equalizar a imagem capturada, de grosso modo, o
+              histograma realiza a contagem de ocorrência de cada um dos possiveis
+              tons de uma imagem, e a equalização é uma ação para mudar a distribuição
+              de valores de modo a reduzir as diferenças acentuadas da imagem, e
+              assim acentuando detalhes não visíveis anteriormente.</p>
           </div>
           <div class="listingblock">
             <div class="content">
@@ -378,24 +377,37 @@ int main(int argc, char** argv) {
               <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/res1.jpg?raw=true"
                 alt="Sunset" width="512" height="256">
             </div>
-            <div class="title">Figure 4: Resultado obtido</div>
+            <div class="title">Figure 6: Resultado obtido em diferentes iluminações</div>
           </div>
           <div id="img-sunset" class="imageblock">
             <div class="content">
               <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/res2.png?raw=true"
                 alt="Sunset" width="512" height="256">
             </div>
-            <div class="title">Figure 4: Resultado obtido</div>
+            <div class="title">Figure 7: Resultado obtido em diferentes iluminações</div>
           </div>
           <div id="img-sunset" class="imageblock">
             <div class="content">
               <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/resultado.png?raw=true"
                 alt="Sunset" width="512" height="256">
             </div>
-            <div class="title">Figure 4: Resultado obtido</div>
+            <div class="title">Figure 8: Resultado obtido em diferentes iluminações</div>
           </div>
+        </div>
+        <div class="sect2">
+          <h3 id="_detec_o_de_movimento">Detecção de movimento</h3>
           <div class="paragraph">
-            <p>Detecção de movimento</p>
+            <p>O detector de movimento é criado analisando um dos canais do histograma,
+              neste caso foi analisado o canal RED. É analisado o histograma da imagem
+              capturada no momento e em um momento anterior, então é somado todos
+              os valores do histograma do canal observado em ambas as imagens, com
+              isto, é comparado as 2 somas e se ultrapassar um limiar pre-definido,
+              é impresso na tela "movimento detectado". Como a imagem é capturada
+              em um instante muito proximo uma da outra, não se pode colocar um limiar
+              muito alto pois se não é apenas detectado apenas um movimento muito
+              rápido, e um limiar pequeno, qualquer simples movimento é detectado,
+              entao este limiar irá definir a precisão do movimento que se deseja
+              alcançar.</p>
           </div>
           <div class="listingblock">
             <div class="content">
@@ -500,11 +512,16 @@ int main(int argc, char** argv) {
               <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/movimento.png?raw=true"
                 alt="Sunset" width="315" height="256">
             </div>
-            <div class="title">Figure 4: Resultado obtido</div>
+            <div class="title">Figure 9: Movimento detectado</div>
           </div>
         </div>
         <div class="sect2">
           <h3 id="_filtragem_no_dom_nio_espacial_i">Filtragem no domínio espacial I</h3>
+          <div class="paragraph">
+            <p>Baseado no exemplo filtroespacial.cpp, foi implementado uma opção no
+              menu para o filtro laplaciano do gaussiano, bem como sua matriz de
+              convolução.</p>
+          </div>
           <div class="listingblock">
             <div class="content">
               <pre class="highlight"><code class="language-cpp" data-lang="cpp">#include &lt;iostream&gt;
@@ -636,17 +653,17 @@ int main(int argvc, char** argv) {
           </div>
           <div id="img-sunset" class="imageblock">
             <div class="content">
-              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/filtro%20horizontal.jpg?raw=true"
-                alt="Sunset" width="300" height="300">
-            </div>
-            <div class="title">Figure x: Filtro Horizontal</div>
-          </div>
-          <div id="img-sunset" class="imageblock">
-            <div class="content">
               <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/foto%20flamengo%20original.jpg?raw=true"
                 alt="Sunset" width="300" height="300">
             </div>
             <div class="title">Figure x: Imagem Original</div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/filtro%20horizontal.jpg?raw=true"
+                alt="Sunset" width="300" height="300">
+            </div>
+            <div class="title">Figure 10: Filtro Horizontal</div>
           </div>
           <div id="img-sunset" class="imageblock">
             <div class="content">
@@ -657,17 +674,17 @@ int main(int argvc, char** argv) {
           </div>
           <div id="img-sunset" class="imageblock">
             <div class="content">
-              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/laplaciano%20de%20gaussiano.jpg.jpg?raw=true"
-                alt="Sunset" width="300" height="300">
-            </div>
-            <div class="title">Figure x: Filtro laplaciano-gaussiano</div>
-          </div>
-          <div id="img-sunset" class="imageblock">
-            <div class="content">
               <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/laplaciano.jpg?raw=true"
                 alt="Sunset" width="300" height="300">
             </div>
             <div class="title">Figure x: Filtro laplaciano</div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/laplaciano%20de%20gaussiano.jpg.jpg?raw=true"
+                alt="Sunset" width="300" height="300">
+            </div>
+            <div class="title">Figure x: Filtro laplaciano-gaussiano</div>
           </div>
         </div>
       </div>
