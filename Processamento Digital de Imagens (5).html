@@ -1,5 +1,6 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
   <meta charset="UTF-8">
@@ -10,9 +11,24 @@
   <link rel="stylesheet" href="https://asciidoclive.com/assets/asciidoctor.js/css/asciidoctor.css">
 </head>
 
-<body class="article">
+<body class="article toc2 toc-left">
   <div id="header">
     <h1>Processamento Digital de Imagens</h1>
+    <div id="toc" class="toc2">
+      <div id="toctitle">Table of Contents</div>
+      <ul class="sectlevel1">
+        <li><a href="#_unidade_1">1. Unidade 1</a>
+          <ul class="sectlevel2">
+            <li><a href="#_manipulando_pixels_em_uma_imagem">1.1. Manipulando pixels em uma imagem</a></li>
+            <li><a href="#_invertendo_regi_es">1.2. Invertendo regiões</a></li>
+            <li><a href="#_preenchendo_regi_es">1.3. Preenchendo regiões</a></li>
+            <li><a href="#_manipula_o_de_histogramas">1.4. Manipulação de histogramas</a></li>
+            <li><a href="#_detec_o_de_movimento">1.5. Detecção de movimento</a></li>
+            <li><a href="#_filtragem_no_dom_nio_espacial_i">1.6. Filtragem no domínio espacial I</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
   </div>
   <div id="content">
     <div id="preamble">
@@ -24,10 +40,10 @@
       </div>
     </div>
     <div class="sect1">
-      <h2 id="_unidade_1">Unidade 1</h2>
+      <h2 id="_unidade_1">1. Unidade 1</h2>
       <div class="sectionbody">
         <div class="sect2">
-          <h3 id="_manipulando_pixels_em_uma_imagem">Manipulando pixels em uma imagem</h3>
+          <h3 id="_manipulando_pixels_em_uma_imagem">1.1. Manipulando pixels em uma imagem</h3>
           <div class="paragraph">
             <p>Utilizando o programa <a href="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/codigos/pixels.cpp">exemplo/pixels.cpp</a>              como referência, foi implementado o programa regions.cpp. Esse programa
               solicita ao usuário as coordenadas x e y de dois pontos P1 e P2, localizados
@@ -107,7 +123,7 @@ int main(int, char**) {
           </div>
         </div>
         <div class="sect2">
-          <h3 id="_invertendo_regi_es">Invertendo regiões</h3>
+          <h3 id="_invertendo_regi_es">1.2. Invertendo regiões</h3>
           <div class="paragraph">
             <p>O programa deve trocar os quadrantes em diagonal na imagem. Inicialmente
               como podemos ver no código, a imagem é dividida em 4 partes iguais
@@ -181,7 +197,7 @@ int main(int, char**){
           </div>
         </div>
         <div class="sect2">
-          <h3 id="_preenchendo_regi_es">Preenchendo regiões</h3>
+          <h3 id="_preenchendo_regi_es">1.3. Preenchendo regiões</h3>
           <div class="paragraph">
             <p>O primeiro problema é referente caso exista mais de 255 objetos na cena,
               em que o problema de rotulação fica comprometido, e isto ocorre devido
@@ -277,7 +293,7 @@ int main(int argc, char** argv) {
           </div>
         </div>
         <div class="sect2">
-          <h3 id="_manipula_o_de_histogramas">Manipulação de histogramas</h3>
+          <h3 id="_manipula_o_de_histogramas">1.4. Manipulação de histogramas</h3>
           <div class="paragraph">
             <p>Como mostrado anteriormente e analisando o programa histogram.cpp, adaptamos
               o codigo de forma a equalizar a imagem capturada, de grosso modo, o
@@ -395,7 +411,7 @@ int main(int argc, char** argv) {
           </div>
         </div>
         <div class="sect2">
-          <h3 id="_detec_o_de_movimento">Detecção de movimento</h3>
+          <h3 id="_detec_o_de_movimento">1.5. Detecção de movimento</h3>
           <div class="paragraph">
             <p>O detector de movimento é criado analisando um dos canais do histograma,
               neste caso foi analisado o canal RED. É analisado o histograma da imagem
@@ -516,7 +532,7 @@ int main(int argc, char** argv) {
           </div>
         </div>
         <div class="sect2">
-          <h3 id="_filtragem_no_dom_nio_espacial_i">Filtragem no domínio espacial I</h3>
+          <h3 id="_filtragem_no_dom_nio_espacial_i">1.6. Filtragem no domínio espacial I</h3>
           <div class="paragraph">
             <p>Baseado no exemplo filtroespacial.cpp, foi implementado uma opção no
               menu para o filtro laplaciano do gaussiano, bem como sua matriz de
@@ -690,6 +706,13 @@ int main(int argvc, char** argv) {
       </div>
     </div>
   </div>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({ messageStyle: "none", tex2jax: { inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]], ignoreClass: "nostem|nolatexmath" }, asciimath2jax:
+    { delimiters: [["\\$", "\\$"]], ignoreClass: "nostem|noasciimath" }, TeX: { equationNumbers:
+    { autoNumber: "none" } } });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
 </body>
 
 </html>
