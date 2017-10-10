@@ -621,15 +621,20 @@ image::https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagen
 
 === Filtro homomórfico
 
-XXXXXXXXXXXXXXXXXX
-X
-XXXXXXXXXXXXXXXXXXXXXX
-XXXXXXXXXXXXXXXXXXXXXXXX
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+Tendo como base o programa exemplos/dft.cpp, foram feitas algumas alterações. O filtro utilizado é um filtro homomórfico, que é caracterizado pela equação abaixo, no lugar do filtro passa-baixas. São adicionados sliders para uma melhor determinação dos parâmetros de entrada para esse filtro e, a cada modificação de um valor dos sliders, é executado o mesmo algortimo do programa exemplo.cpp, porém utilizando uma função que aplica o filtro homomórfico.
 
+.Equação do filtro homomórfico
+[#img-sunset]
+[caption="Figure 15: "]
+image::https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/homomorficofiltro.png?raw=true[Sunset,488,74]
 
-
+ 
+ 
+ 
+ 
+ O programa recebe uma imagem em tons de cinza como entrada e logo depois, ela é mostrada na tela. Após o usuário apertar uma tecla, começa-se a preparação para a aplicação do filtro, obtendo-se, primeiramente, as dimensões ótimas pra dft. A primeira operação que é feita na imagem é o padding que adequará as dimensões da imagem para a aplicação da dft. Após isso, é somado o valor 1 para todos os pixels para poder aplicar a função logarítmica natural. Após aplicar a função logarítmica, realiza-se a dft. Realiza-se uma troca de regiões no domínio da frequência logo em seguida para facilitar a aplicação do filtro, deixando as regiões de baixa frequência no centro. A matriz resultante dessa última operação ficará guardada no objeto complexImage e assim, quando o usuário fizer alterações nos parâmetros do filtro através de barras de rolagem, não será necessário refazer todas as operações anteriores. O usuário poderá modificar, através da barra de rolagem, quatro parâmetros. São eles: yh(ganho das regiões superiores a frequência de corte), yl(ganho das regiões inferiores a frequência de corte), d0(frequência de corte) e c(constante que multiplica o expoente da função exponencial e que influencia na região de transição). Após a aplicação do filtro com os parâmetros desejados, um nova troca de regiões será realizada e a dft inversa será aplicada. Será pego só a parte real do resultado. Depois, será aplicada uma função exponencial e o resultado obtido será normalizado para sua exibição na tela. E quando o usuário apertar uma tecla, novamente, o programa será encerrado.
+ 
+ 
  
 [source,cpp]
 -----------------
@@ -862,8 +867,7 @@ int main(int , char** argv){
 
 -----------------
 
-.Foto original
+.Lado a lado, imagem original e resultado do filtro
 [#img-sunset]
-[caption="Figure 1: "]
+[caption="Figure 16: "]
 image::https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/it.png?raw=true[Sunset,720,550]
-
