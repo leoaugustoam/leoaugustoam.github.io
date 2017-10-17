@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -30,6 +29,7 @@
         <li><a href="#_unidade_2">2. Unidade 2</a>
           <ul class="sectlevel2">
             <li><a href="#_filtro_homom_rfico">2.1. Filtro homomórfico</a></li>
+            <li><a href="#_canny_e_o_pontilhismo">2.2. Canny e o pontilhismo</a></li>
           </ul>
         </li>
       </ul>
@@ -716,9 +716,25 @@ int main(int argvc, char** argv) {
         <div class="sect2">
           <h3 id="_filtro_homom_rfico">2.1. Filtro homomórfico</h3>
           <div class="paragraph">
-            <p>XXXXXXXXXXXXXXXXXX X XXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXX
-              XXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-            </p>
+            <p>Tendo como base o programa exemplos/dft.cpp, foram feitas algumas alterações.
+              O filtro utilizado é um filtro homomórfico, que é caracterizado pela
+              equação abaixo, no lugar do filtro passa-baixas. São adicionados sliders
+              para uma melhor determinação dos parâmetros de entrada para esse filtro
+              e, a cada modificação de um valor dos sliders, é executado o mesmo
+              algortimo do programa exemplo.cpp, porém utilizando uma função que
+              aplica o filtro homomórfico.</p>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/homomorficofiltro.png?raw=true"
+                alt="Sunset" width="488" height="74">
+            </div>
+            <div class="title">Figure 15: Equação do filtro homomórfico</div>
+          </div>
+          <div class="literalblock">
+            <div class="content">
+              <pre>O programa recebe uma imagem em tons de cinza como entrada e logo depois, ela é mostrada na tela. Após o usuário apertar uma tecla, começa-se a preparação para a aplicação do filtro, obtendo-se, primeiramente, as dimensões ótimas pra dft. A primeira operação que é feita na imagem é o padding que adequará as dimensões da imagem para a aplicação da dft. Após isso, é somado o valor 1 para todos os pixels para poder aplicar a função logarítmica natural. Após aplicar a função logarítmica, realiza-se a dft. Realiza-se uma troca de regiões no domínio da frequência logo em seguida para facilitar a aplicação do filtro, deixando as regiões de baixa frequência no centro. A matriz resultante dessa última operação ficará guardada no objeto complexImage e assim, quando o usuário fizer alterações nos parâmetros do filtro através de barras de rolagem, não será necessário refazer todas as operações anteriores. O usuário poderá modificar, através da barra de rolagem, quatro parâmetros. São eles: yh(ganho das regiões superiores a frequência de corte), yl(ganho das regiões inferiores a frequência de corte), d0(frequência de corte) e c(constante que multiplica o expoente da função exponencial e que influencia na região de transição). Após a aplicação do filtro com os parâmetros desejados, um nova troca de regiões será realizada e a dft inversa será aplicada. Será pego só a parte real do resultado. Depois, será aplicada uma função exponencial e o resultado obtido será normalizado para sua exibição na tela. E quando o usuário apertar uma tecla, novamente, o programa será encerrado.</pre>
+            </div>
           </div>
           <div class="listingblock">
             <div class="content">
@@ -955,7 +971,137 @@ int main(int , char** argv){
               <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/it.png?raw=true"
                 alt="Sunset" width="720" height="550">
             </div>
-            <div class="title">Figure 1: Foto original</div>
+            <div class="title">Figure 16: Lado a lado, imagem original e resultado do filtro</div>
+          </div>
+        </div>
+        <div class="sect2">
+          <h3 id="_canny_e_o_pontilhismo">2.2. Canny e o pontilhismo</h3>
+          <div class="paragraph">
+            <p>O problema consiste na utilização das bordas encontradas pelo algoritmo
+              de Canny para o melhoramento da técnica do pontilhismo. Inicialmente
+              foi aplicado na imagem o processo de pontilhismo, e logo apos a imagem
+              bruta passou por algumas iterações do filtro de Canny, para que fosse
+              possível delimitar suas bordas. Em cada uma das iterações o limiar
+              do filtro é alterado com a intenção de obter uma imagem com menos bordas.
+              Para as bordas ficarem mais destacadas foi necessário percorrer a imagem
+              filtrada e desenhar um círculo em cada pixel que possuísse um tom de
+              cinza maior que zero.</p>
+          </div>
+          <div class="listingblock">
+            <div class="content">
+              <pre class="highlight"><code class="language-cpp" data-lang="cpp">  #include &lt;iostream&gt;
+  #include &lt;opencv2/opencv.hpp&gt;
+  #include &lt;fstream&gt;
+  #include &lt;iomanip&gt;
+  #include &lt;vector&gt;
+  #include &lt;algorithm&gt;
+  #include &lt;numeric&gt;
+  #include &lt;ctime&gt;
+  #include &lt;cstdlib&gt;
+
+  using namespace std;
+  using namespace cv;
+
+
+  #define STEP 5
+  #define JITTER 3
+  #define RAIO 2
+
+  int main(int argc, char** argv){
+  Mat Original, borderOriginalImage;
+  Mat Pontilhismo;
+  int x, y, width, height, gray;
+
+  vector&lt;int&gt; yrange;
+  vector&lt;int&gt; xrange;
+
+  srand(time(0));
+
+  Original= imread("zico.jpg" ,CV_LOAD_IMAGE_GRAYSCALE);
+
+  width = Original.size().width;
+  height = Original.size().height;
+  xrange.resize(height/STEP);
+  yrange.resize(width/STEP);
+  iota(xrange.begin(), xrange.end(), 0);
+  iota(yrange.begin(), yrange.end(), 0);
+
+  for(uint i=0; i&lt;xrange.size(); i++){
+    xrange[i]= xrange[i]*STEP+STEP/2;
+  }
+
+  for(uint i=0; i&lt;yrange.size(); i++){
+    yrange[i]= yrange[i]*STEP+STEP/2;
+  }
+
+  Original.copyTo(Pontilhismo);
+
+  //Executa o pontilhismo;
+  for(auto i : xrange){
+    random_shuffle(yrange.begin(), yrange.end());
+    for(auto j : yrange){
+      x = i+rand()%(2*JITTER)-JITTER+1;
+      y = j+rand()%(2*JITTER)-JITTER+1;
+      gray = Original.at&lt;uchar&gt;(x,y);
+      circle(Pontilhismo, cv::Point(y,x), RAIO, CV_RGB(gray,gray,gray), -1, CV_AA);
+    }
+  }
+
+  imshow("Imagem Pontilhista", Pontilhismo);
+  imwrite("imagemComPontilhismo.jpg", Pontilhismo);
+
+   //Aplica Canny
+   for(int z=0; z&lt;5; z++){
+     Canny(Original, borderOriginalImage, 10*z, 50*z);
+     int raio = 10-z;
+
+     for(int i=0; i&lt;height; i++ ){
+        for(int j=0; j&lt;width; j++){
+           if(borderOriginalImage.at&lt;uchar&gt;(i,j) == 255){
+              gray = Original.at&lt;uchar&gt;(i,j);
+              circle(Pontilhismo, cv::Point(j,i), raio, CV_RGB(gray,gray,gray), -1, CV_AA);
+             }
+        }
+    }
+
+
+  }
+  imshow("Pontilhismo", Pontilhismo);
+  imwrite("imagemComPontilhismo.jpg", Pontilhismo);
+
+   waitKey();
+  return 0;
+}</code></pre>
+            </div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/zico.jpg?raw=true"
+                alt="Sunset" width="622" height="350">
+            </div>
+            <div class="title">Figure 17: Imagem original</div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/imagem%20pontilhista.png?raw=true"
+                alt="Sunset" width="622" height="350">
+            </div>
+            <div class="title">Figure 18: Imagem pontilhista com raio 5</div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/raio%203%20pontilhismo.png?raw=true"
+                alt="Sunset" width="622" height="350">
+            </div>
+            <div class="title">Figure 19: Imagem pontilhista com raio 3</div>
+          </div>
+          <div id="img-sunset" class="imageblock">
+            <div class="content">
+              <img src="https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/final.png?raw=true"
+                alt="Sunset" width="622" height="350">
+            </div>
+            <div class="title">Figure 20: Resultado final, utilizando como base a imagem pontilhista
+              com raio 5</div>
           </div>
         </div>
       </div>
