@@ -871,3 +871,118 @@ int main(int , char** argv){
 [#img-sunset]
 [caption="Figure 16: "]
 image::https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/it.png?raw=true[Sunset,720,550]
+
+
+=== Canny e o pontilhismo
+
+O problema consiste na utilização das bordas encontradas pelo algoritmo de Canny para o melhoramento da técnica do pontilhismo. Inicialmente foi aplicado na imagem o processo de pontilhismo, e logo apos a imagem bruta passou por algumas iterações do filtro de Canny, para que fosse possível delimitar suas bordas. Em cada uma das iterações o limiar do filtro é alterado com a intenção de obter uma imagem com menos bordas. Para as bordas ficarem mais destacadas foi necessário percorrer a imagem filtrada e desenhar um círculo em cada pixel que possuísse um tom de cinza maior que zero. 
+ 
+ 
+ 
+[source,cpp]
+-----------------
+  #include <iostream>
+  #include <opencv2/opencv.hpp>
+  #include <fstream>
+  #include <iomanip>
+  #include <vector>
+  #include <algorithm>
+  #include <numeric>
+  #include <ctime>
+  #include <cstdlib>
+
+  using namespace std;
+  using namespace cv;
+
+
+  #define STEP 5
+  #define JITTER 3
+  #define RAIO 2
+
+  int main(int argc, char** argv){
+  Mat Original, borderOriginalImage;
+  Mat Pontilhismo;
+  int x, y, width, height, gray;
+  
+  vector<int> yrange;
+  vector<int> xrange;
+
+  srand(time(0));
+
+  Original= imread("zico.jpg" ,CV_LOAD_IMAGE_GRAYSCALE);
+
+  width = Original.size().width;
+  height = Original.size().height;
+  xrange.resize(height/STEP);
+  yrange.resize(width/STEP);
+  iota(xrange.begin(), xrange.end(), 0);
+  iota(yrange.begin(), yrange.end(), 0);
+
+  for(uint i=0; i<xrange.size(); i++){
+    xrange[i]= xrange[i]*STEP+STEP/2;
+  }
+
+  for(uint i=0; i<yrange.size(); i++){
+    yrange[i]= yrange[i]*STEP+STEP/2;
+  }
+
+  Original.copyTo(Pontilhismo);
+
+  //Executa o pontilhismo;
+  for(auto i : xrange){
+    random_shuffle(yrange.begin(), yrange.end());
+    for(auto j : yrange){
+      x = i+rand()%(2*JITTER)-JITTER+1;
+      y = j+rand()%(2*JITTER)-JITTER+1;
+      gray = Original.at<uchar>(x,y);
+      circle(Pontilhismo, cv::Point(y,x), RAIO, CV_RGB(gray,gray,gray), -1, CV_AA);
+    }
+  }
+
+  imshow("Imagem Pontilhista", Pontilhismo);
+  imwrite("imagemComPontilhismo.jpg", Pontilhismo);
+
+   //Aplica Canny
+   for(int z=0; z<5; z++){
+     Canny(Original, borderOriginalImage, 10*z, 50*z);
+     int raio = 10-z;
+
+     for(int i=0; i<height; i++ ){
+        for(int j=0; j<width; j++){
+           if(borderOriginalImage.at<uchar>(i,j) == 255){
+              gray = Original.at<uchar>(i,j);
+              circle(Pontilhismo, cv::Point(j,i), raio, CV_RGB(gray,gray,gray), -1, CV_AA);
+             }
+        }
+    }
+
+
+  }
+  imshow("Pontilhismo", Pontilhismo);
+  imwrite("imagemComPontilhismo.jpg", Pontilhismo);
+
+   waitKey();
+  return 0;
+}
+
+-----------------
+
+.Imagem original
+[#img-sunset]
+[caption="Figure 17: "]
+image::https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/zico.jpg?raw=true[Sunset,622,350]
+
+.Imagem pontilhista com raio 5
+[#img-sunset]
+[caption="Figure 18: "]
+image::https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/imagem%20pontilhista.png?raw=true[Sunset,622,350]
+
+.Imagem pontilhista com raio 3
+[#img-sunset]
+[caption="Figure 19: "]
+image::https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/raio%203%20pontilhismo.png?raw=true[Sunset,622,350]
+
+.Resultado final, utilizando como base a imagem pontilhista com raio 5
+[#img-sunset]
+[caption="Figure 20: "]
+image::https://github.com/leoaugustoam/leoaugustoam.github.io/blob/master/imagens/final.png?raw=true[Sunset,622,350]
